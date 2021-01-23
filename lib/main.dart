@@ -8,14 +8,24 @@ class ByteBankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: TransferList(),
+      theme: ThemeData(
+        primaryColor: Colors.green[900],
+        accentColor: Colors.blueAccent[700],
+        buttonTheme: ButtonThemeData(
+            buttonColor: Colors.blueAccent[700],
+            textTheme: ButtonTextTheme.primary),
       ),
+      home: TransferList(),
     );
   }
 }
 
-class TransferForm extends StatelessWidget {
+class TransferForm extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => TransferFormState();
+}
+
+class TransferFormState extends State<TransferForm> {
   final TextEditingController _controllerAccountNumber =
       TextEditingController();
   final TextEditingController _controllerValue = TextEditingController();
@@ -23,26 +33,28 @@ class TransferForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          TransferInput(
-            controller: _controllerAccountNumber,
-            label: "Número da conta",
-            hint: "0000",
-            inputType: TextInputType.number,
-          ),
-          TransferInput(
-            controller: _controllerValue,
-            label: "Valor",
-            hint: "0.00",
-            icon: Icons.monetization_on,
-            inputType: TextInputType.number,
-          ),
-          RaisedButton(
-            child: Text("Confirmar"),
-            onPressed: () => _createTransfer(context),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            TransferInput(
+              controller: _controllerAccountNumber,
+              label: "Número da conta",
+              hint: "0000",
+              inputType: TextInputType.number,
+            ),
+            TransferInput(
+              controller: _controllerValue,
+              label: "Valor",
+              hint: "0.00",
+              icon: Icons.monetization_on,
+              inputType: TextInputType.number,
+            ),
+            RaisedButton(
+              child: Text("Confirmar"),
+              onPressed: () => _createTransfer(context),
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
         title: Text("Criando transferência"),
